@@ -6,9 +6,8 @@ if __name__ == '__main__':
     lines = list(line.rstrip() for line in sys.stdin)
     #do stuff
     total = 0
-    replace = {'one':'o1e','two':'t2o','three':'t3ree','four':'4our','five':'5ive','six':'6ix','seven':'7even','eight':'e8ght','nine':'n9ne'}
-    for line in lines:
-        newa = line
+    replace = {'one':'o1e','two':'t2','three':'3e','four':'4','five':'5e','six':'6','seven':'7n','eight':'8','nine':'9'}
+    for newa in lines:
         for pattern in replace.keys():
             newa = re.sub(pattern,replace[pattern],newa)
         new = re.findall('[0-9]',newa)

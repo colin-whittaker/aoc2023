@@ -1,59 +1,44 @@
 #!/usr/bin/env python3.10
 import sys
 
-neigh = [ (-1,-1),(0,-1),(1,-1),(-1,0),(1,0),(-1,1),(0,1),(1,1) ]
+def find_starts(grid, x,y):
+    neigh = [ (-1,-1),(0,-1),(1,-1),(-1,0),(1,0),(-1,1),(0,1),(1,1) ]
+    starts = set()
+    for i,j in neigh:
+        a,b = x+i,y+j
+        if a<0 or a==xlim or b<0 or b==ylim:
+            next
+        if grid[b][a].isdigit():
+            while a>0 and grid[b][a-1].isdigit():
+                a -= 1
+            starts.add((a,b) )
+    return starts
+
+def start2int(grid, x,y):
+    z = x+1
+    while z<xlim and grid[y][z].isdigit():
+        z +=1
+    return int(grid[y][x:z])
+         
 if __name__ == '__main__':
-    lines = list(line.rstrip() for line in sys.stdin)
+    grid = list(line.rstrip() for line in sys.stdin)
     #do stuff
-    grid = []
-    for line in lines:
-        grid.append(line)
-    xlim = len(line)
+    xlim = len(grid[0])
     ylim = len(grid)
-    sym = []
-    gearsym = []
+    starts = set()
+    tot = 0
+    tot2 = 0
     for y in range(ylim):
         for x,c in enumerate(grid[y]):
             if c != '.' and not c.isdigit():
-                sym.append((x,y))
-                if c == '*':
-                    gearsym.append((x,y))
-    starts = set()
-    for x,y in sym:
-        for i,j in neigh:
-            a,b = x+i,y+j
-            if a<0 or a==xlim or b<0 or b==ylim:
-                next
-            if grid[b][a].isdigit():
-                while a>0 and grid[b][a-1].isdigit():
-                    a -= 1
-                starts.add((a,b) )
-    tot = 0
+                s = find_starts(grid, x,y)
+                starts.update(s)
+                if c == '*' and len(s) == 2:
+                    nums = []
+                    for a,b in s:
+                        nums.append(start2int(grid,a,b))
+                    tot2 += nums[0]*nums[1]
     for x,y in starts:
-        z = x+1
-        while z<xlim and grid[y][z].isdigit():
-            z +=1
-        tot += int(grid[y][x:z])
+        tot += start2int(grid,x,y)
     print(tot)
-
-    tot = 0
-    for x,y in gearsym:
-        starts = set()
-        for i,j in neigh:
-            a,b = x+i,y+j
-            if a<0 or a==xlim or b<0 or b==ylim:
-                next
-            if grid[b][a].isdigit():
-                while a>0 and grid[b][a-1].isdigit():
-                    a -= 1
-                starts.add((a,b) )
-        if len(starts) == 2:
-            nums = []
-            for x,y in starts:
-                z = x+1
-                while z<xlim and grid[y][z].isdigit():
-                    z +=1
-                nums.append(int(grid[y][x:z]))
-            tot += nums[0]*nums[1]
-    print(tot)
- 
+    print(tot2)

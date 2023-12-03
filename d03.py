@@ -1,4 +1,5 @@
 #!/usr/bin/env python3.10
+import math
 import sys
 
 def find_starts(grid, x,y):
@@ -6,12 +7,10 @@ def find_starts(grid, x,y):
     starts = set()
     for i,j in neigh:
         a,b = x+i,y+j
-        if a<0 or a==xlim or b<0 or b==ylim:
-            next
-        if grid[b][a].isdigit():
+        if not (a<0 or a==xlim or b<0 or b==ylim) and grid[b][a].isdigit():
             while a>0 and grid[b][a-1].isdigit():
                 a -= 1
-            starts.add((a,b) )
+            starts.add((a,b))
     return starts
 
 def start2int(grid, x,y):
@@ -26,7 +25,6 @@ if __name__ == '__main__':
     xlim = len(grid[0])
     ylim = len(grid)
     starts = set()
-    tot = 0
     tot2 = 0
     for y in range(ylim):
         for x,c in enumerate(grid[y]):
@@ -34,11 +32,6 @@ if __name__ == '__main__':
                 s = find_starts(grid, x,y)
                 starts.update(s)
                 if c == '*' and len(s) == 2:
-                    nums = []
-                    for a,b in s:
-                        nums.append(start2int(grid,a,b))
-                    tot2 += nums[0]*nums[1]
-    for x,y in starts:
-        tot += start2int(grid,x,y)
-    print(tot)
+                    tot2 += math.prod([ start2int(grid,a,b) for a,b in s] )
+    print(sum( [ start2int(grid,x,y) for x,y in starts ] ))
     print(tot2)

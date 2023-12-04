@@ -8,14 +8,11 @@ if __name__ == '__main__':
     tot = 0
     for line in lines:
         n,line = line.split(': ')
-        n = n.split(' ')[1]
         win,mine = line.split(' | ')
         win = set(win.strip().split())
         mine = set(mine.strip().split())
         matches = win.intersection(mine)
-        if len(matches) == 1:
-            tot += 1
-        elif len(matches) > 1:
+        if len(matches):
             tot += pow(2,len(matches)-1)
         cards.append([1,len(matches)])
     print(tot)

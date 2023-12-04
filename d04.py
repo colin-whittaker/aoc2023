@@ -11,10 +11,10 @@ if __name__ == '__main__':
         win,mine = line.split(' | ')
         win = set(win.strip().split())
         mine = set(mine.strip().split())
-        matches = win.intersection(mine)
-        if len(matches):
-            tot += pow(2,len(matches)-1)
-        cards.append([1,len(matches)])
+        matches = len(win.intersection(mine))
+        if matches:
+            tot += pow(2,matches-1)
+        cards.append([1,matches])
     print(tot)
     for i,v in enumerate(cards):
         n,m = v

@@ -24,19 +24,8 @@ def hand_type(a,wild):
             return 3 if wild else 1
 
 def card_2_value(x,wild):
-    if x.isdigit():
-        return int(x)
-    match x:
-        case 'A':
-            return 14
-        case 'K':
-            return 13
-        case 'Q':
-            return 12
-        case 'J':
-            return 1 if wild else 11
-        case 'T':
-            return 10
+    cards = '0J23456789T1QKA' if wild else '0123456789TJQKA'
+    return cards.index(x)
 
 def cmp_hand_wild(a,b):
     return cmp_hand(a,b,True)
@@ -44,10 +33,9 @@ def cmp_hand_wild(a,b):
 def cmp_hand(a,b,wild=False):
     if a == b:
         return 0
-    act = hand_type(a,wild)
-    bct = hand_type(b,wild)
-    if act - bct != 0 :
-        return act - bct
+    t = hand_type(a,wild) - hand_type(b,wild)
+    if t != 0 :
+        return t
     for i in range(5):
         if a[i] == b[i]:
             continue
@@ -61,12 +49,6 @@ if __name__ == '__main__':
         hand,bid = line.split()
         hands[hand] = int(bid)
     res = sorted(hands.keys(), key=cmp_to_key(cmp_hand))
-    tot = 0
-    for i,v in enumerate(res):
-        tot += (i+1)*hands[v]
-    print(tot)
+    print( sum ((i)*hands[v] for i,v in enumerate(res,1)))
     res = sorted(hands.keys(), key=cmp_to_key(cmp_hand_wild))
-    tot = 0
-    for i,v in enumerate(res):
-        tot += (i+1)*hands[v]
-    print(tot)
+    print( sum ((i)*hands[v] for i,v in enumerate(res,1)))

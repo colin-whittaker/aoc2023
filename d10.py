@@ -22,7 +22,6 @@ def directions(c):
             return [(1,0),(0,1)]
         case '.': 
             return []
-
     print("panic: ",c)
 
 def solve_grid(start,grid,xmax,ymax):
@@ -55,13 +54,11 @@ if __name__ == '__main__':
     xmax = len(line)
     sx,sy = start
     n = []
-    for c,d in [(-1,0),(1,0),(0,-1),(0,1)]:
-        a,b = sx+c,sy+d
-        if 0 <= a < xmax and 0 <= b < ymax:
-            for i,j in directions(grid[(a,b)]):
-                x,y = a+i,b+j
+    for a,b in [ (sx+c,sy+d) for c,d in [(-1,0),(1,0),(0,-1),(0,1)]]:
+        if (a,b) in grid: 
+            for x,y in [ (a+i,b+j) for i,j in directions(grid[(a,b)]) ]:
                 if (x,y) == start:
-                    n.append((c,d))
+                    n.append((a-x,b-y))
     for c in '|-LJ7F':
         if n == directions(c):
             grid[start] = c

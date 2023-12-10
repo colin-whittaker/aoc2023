@@ -69,14 +69,12 @@ if __name__ == '__main__':
  
     solve = solve_grid(start,grid,xmax,ymax)
     print(max(solve.values()))
-    ng = {}
-    for p in grid:
-        ng[p] = grid[p] if p in solve else '.'
     for y in range(ymax):
         i = False
         for x in range(xmax):
-            if ng[(x,y)] in '|JL': 
-                i = not i
-            elif ng[(x,y)] == '.' and not i:
-                    ng[(x,y)] = 0
-    print(sum([1 if c == '.' else 0 for c in ng.values()]))
+            if (x,y) in solve:
+                if grid[(x,y)] in '|JL': 
+                    i = not i
+            else:
+                grid[(x,y)] = 0 if not i else '.'
+    print(list(grid.values()).count('.'))

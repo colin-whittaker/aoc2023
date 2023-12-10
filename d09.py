@@ -2,8 +2,8 @@
 import sys
 
 def solve(d,r=False):
-    n = [ x[1]-x[0] for x in zip(d[::],d[1::]) ]
-    if len(set(n)) == 1 and n[0] == 0:
+    n = [ x[1]-x[0] for x in zip(d,d[1:]) ]
+    if set(n) == {0}:
         return 0
     n2 = solve(n,r)
     return n[-1] + n2 if not r else n[0] - n2

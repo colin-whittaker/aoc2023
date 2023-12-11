@@ -26,8 +26,7 @@ def directions(c):
 
 def solve_grid(start,grid,xmax,ymax):
     costs = [(0,start)]
-    visit = {}
-    visit[start] = 0 
+    visit = {start:0}
     while True:
         if len(costs) == 0:
             return visit
@@ -35,7 +34,7 @@ def solve_grid(start,grid,xmax,ymax):
         x,y = npos
         for i,j in directions(grid[(x,y)]):
             a,b = x+i,y+j
-            if 0 <= a < xmax and 0 <= b < ymax:
+            if (a,b) in grid:
                 if (a,b) not in visit or score+1 < visit[(a,b)]:
                     heapq.heappush(costs,(score+1,(a,b)))
                     visit[(a,b)] = score + 1 
@@ -52,9 +51,8 @@ if __name__ == '__main__':
                 start = (x,ymax)
         ymax += 1
     xmax = len(line)
-    sx,sy = start
     n = []
-    for a,b in [ (sx+c,sy+d) for c,d in [(-1,0),(1,0),(0,-1),(0,1)]]:
+    for a,b in [ (start[0]+c,start[1]+d) for c,d in [(-1,0),(1,0),(0,-1),(0,1)]]:
         if (a,b) in grid: 
             for x,y in [ (a+i,b+j) for i,j in directions(grid[(a,b)]) ]:
                 if (x,y) == start:

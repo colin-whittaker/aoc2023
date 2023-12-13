@@ -41,8 +41,7 @@ def find_reflect2(grid):
 if __name__ == '__main__':
     lines = list(line.rstrip() for line in sys.stdin)
     #do stuff
-    grids=[]
-    grids.append([])
+    grids=[[]]
     for line in lines:
         if line == '':
             grids.append([])

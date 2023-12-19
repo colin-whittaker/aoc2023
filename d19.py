@@ -3,28 +3,6 @@ import sys
 import math
 from copy import deepcopy
 
-def process(part,r):
-    if r == 'A':
-        accept.append(part)
-        return
-    elif r == 'R':
-        return
-    rule = rules[r]
-
-    for x in rule:
-        if '*' in x:
-            process(part,x[0])
-            return
-        t,c,o,v = x[0],'xmas'.index(x[1]),x[2],int(x[3])
-        if o =='<':
-            if part[c] < v:
-                process(part,t)
-                return
-        elif o == '>':
-            if part[c] > v:
-                process(part,t)
-                return
-
 def process2(part,r):
     if r == 'A':
         accept.append(tuple(part))
@@ -44,16 +22,16 @@ def process2(part,r):
                 process2(part,t)
                 return
             elif s<v<=e:
-                p1 = [ p for p in part ]
+                p1 = part[:]
                 p1[c] = (s,v-1)
-                part[c] = (v,e)
                 process2(p1,t)
+                part[c] = (v,e)
         elif o == '>':
             if s > v:
                 process2(part,t)
                 return
             elif s<=v<e:
-                p2 = [ p for p in part ]
+                p2 = part[:]
                 part[c] = (s,v)
                 p2[c] = (v+1,e)
                 process2(p2,t)
@@ -81,9 +59,9 @@ if __name__ == '__main__':
             parts.append(tuple([int(x[2:]) for x in line[1:-1].split(',')]))
 
     accept = []
-    for part in parts:
-        process(part,'in')
-    print(sum([sum(x) for x in accept]))
+    for x,m,a,s in parts:
+        process2([(x,x),(m,m),(a,a),(s,s)],'in')
+    print(sum([sum([y[0] for y in x]) for x in accept]))
     accept = []
     process2([(1,4000),(1,4000),(1,4000),(1,4000)],'in')
     print(sum([math.prod([y[1]+1-y[0] for y in x]) for x in accept]))

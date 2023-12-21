@@ -31,13 +31,6 @@ if __name__ == '__main__':
             start = (len(grid)-1,line.index('S'))
             grid[start[0]][start[1]] = '.'
     pos = [start]
-    for _ in range(64):
-        np = []
-        for p in pos:
-            np += newpos(grid,p)
-        pos = set(np)
-    print(len(pos))
-    pos = [start]
     t = 26501365
     a,b = 1,0
     xmax=len(grid[0])
@@ -50,6 +43,8 @@ if __name__ == '__main__':
         if a%xmax == t%xmax:
             res.append(len(pos))
             b = len(pos)
+        if a == 64:
+            print(len(pos))
         a+=1
     a0,a1,a2 = res
     b1,b2 = a1-a0,a2-a1

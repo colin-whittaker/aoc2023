@@ -1,6 +1,5 @@
 #!/usr/bin/env python3.10
 import sys
-from collections import Counter
 
 def freefall(bricks):
     num = 0

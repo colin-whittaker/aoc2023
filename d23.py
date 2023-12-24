@@ -49,7 +49,7 @@ if __name__ == '__main__':
     for line in lines:
         grid.append([c for c in line])
     ymax,xmax = len(grid),len(grid[0])
-    start = (0,grid[0].index('.')) 
+    start = (0,grid[0].index('.'))
     end = (ymax-1,grid[-1].index('.'))
     nodes = set([start,end])
     for y in range(1,ymax-1): # taking advantage of the border

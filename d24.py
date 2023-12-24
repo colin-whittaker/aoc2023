@@ -12,8 +12,8 @@ def test_collide(a,b):
     den = ((ax1-ax2)*(by1-by2)-(ay1-ay2)*(bx1-bx2))
     if den == 0:
         return False
-    x = ( (ax1*ay2 - ay1*ax2)*(bx1-bx2) - (ax1-ax2)*(bx1*by2-by1*bx2)) / ((ax1-ax2)*(by1-by2) - (ay1-ay2)*(bx1-bx2))
-    y = ( (ax1*ay2 - ay1*ax2)*(by1-by2) - (ay1-ay2)*(bx1*by2-by1*bx2)) / ((ax1-ax2)*(by1-by2) - (ay1-ay2)*(bx1-bx2))
+    x = ( (ax1*ay2 - ay1*ax2)*(bx1-bx2) - (ax1-ax2)*(bx1*by2-by1*bx2)) / den
+    y = ( (ax1*ay2 - ay1*ax2)*(by1-by2) - (ay1-ay2)*(bx1*by2-by1*bx2)) / den
     #bot,top = 7,27
     bot,top = 200000000000000,400000000000000
     if bot <= x <=top and bot <= y <= top and (x>ax1)==(ax2>ax1) and (x>bx1)==(bx2>bx1):

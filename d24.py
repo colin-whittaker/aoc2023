@@ -4,9 +4,9 @@ import itertools
 import z3
 
 def test_collide(a,b):
-    ax1,ay1,az1,vx1,vy1,vz1 = hail[a]
+    ax1,ay1,az1,vx1,vy1,vz1 = a
     ax2,ay2 = ax1+vx1,ay1+vy1
-    bx1,by1,bz1,vx2,vy2,vz2 = hail[b]
+    bx1,by1,bz1,vx2,vy2,vz2 = b
     bx2,by2 = bx1+vx2,by1+vy2
 
     den = ((ax1-ax2)*(by1-by2)-(ay1-ay2)*(bx1-bx2))
@@ -29,7 +29,7 @@ if __name__ == '__main__':
     n = len(hail)
     count = 0
     for a,b in itertools.combinations(range(n),2):
-        count += 1 if test_collide(a,b) else 0
+        count += 1 if test_collide(hail[a],hail[b]) else 0
     print(count)
     
     x,y,z,vx,vy,vz = [z3.Int(c) for c in 'x y z vx vy vz'.split()]
